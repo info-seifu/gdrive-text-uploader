@@ -13,6 +13,17 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "project": "./tsconfig.json"
+      },
+      "node": {
+        "extensions": [".js", ".ts"]
+      }
+    },
+    "import/extensions": [".js", ".ts"]
+  },
   "rules": {
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn"
