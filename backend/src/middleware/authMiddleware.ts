@@ -1,5 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
-import { failure } from '../utils/apiResponse.js';
+import { NextFunction, Request, Response } from 'express';
+
+import { failure } from '../utils/apiResponse';
 
 export interface AuthedRequest extends Request {
   session: Request['session'] & {

@@ -1,6 +1,7 @@
 import { Router } from 'express';
-import { buildAuthUrl, exchangeCodeForTokens, fetchUserInfo } from '../utils/googleClient.js';
-import { failure, success } from '../utils/apiResponse.js';
+
+import { failure, success } from '../utils/apiResponse';
+import { buildAuthUrl, exchangeCodeForTokens, fetchUserInfo } from '../utils/googleClient';
 
 const router = Router();
 

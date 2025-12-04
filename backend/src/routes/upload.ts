@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import multer from 'multer';
-import { requireAuth } from '../middleware/authMiddleware.js';
-import { generateUniqueFileName } from '../utils/fileNameGenerator.js';
-import { ensureValidAccessToken, uploadTextToDrive } from '../utils/googleClient.js';
-import { failure, success } from '../utils/apiResponse.js';
-import { validateDate, validatePlainTextFile, validateStudentId } from '../utils/validation.js';
+
+import { requireAuth } from '../middleware/authMiddleware';
+import { failure, success } from '../utils/apiResponse';
+import { generateUniqueFileName } from '../utils/fileNameGenerator';
+import { ensureValidAccessToken, uploadTextToDrive } from '../utils/googleClient';
+import { PlainUploadedFile, validateDate, validatePlainTextFile, validateStudentId } from '../utils/validation';
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -33,7 +34,7 @@ router.post('/upload', requireAuth, (req, res, next) => {
       return;
     }
 
-    const fileResult = validatePlainTextFile(req.file as any);
+    const fileResult = validatePlainTextFile(req.file as PlainUploadedFile | undefined);
     if (!fileResult.ok) {
       res.status(400).json(failure('INVALID_FILE', fileResult.message, fileResult.details));
       return;

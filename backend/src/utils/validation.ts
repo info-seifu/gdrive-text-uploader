@@ -1,4 +1,4 @@
-type PlainUploadedFile = {
+export type PlainUploadedFile = {
   mimetype?: string;
   size: number;
   buffer: Buffer;

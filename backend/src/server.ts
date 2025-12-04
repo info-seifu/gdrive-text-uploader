@@ -1,11 +1,13 @@
 import path from 'path';
-import express from 'express';
-import session from 'express-session';
+
 import cors from 'cors';
 import dotenv from 'dotenv';
-import authRoutes from './routes/auth.js';
-import uploadRoutes from './routes/upload.js';
-import { failure } from './utils/apiResponse.js';
+import express from 'express';
+import session from 'express-session';
+
+import authRoutes from './routes/auth';
+import uploadRoutes from './routes/upload';
+import { failure } from './utils/apiResponse';
 
 dotenv.config({ path: path.resolve('../.env') });
 
@@ -40,6 +42,7 @@ app.use((req, res) => {
   res.status(404).json(failure('NOT_FOUND', `Path not found: ${req.path}`));
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error(err);
   res.status(500).json(failure('INTERNAL_ERROR', '予期せぬエラーが発生しました'));

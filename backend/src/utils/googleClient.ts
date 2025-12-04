@@ -136,7 +136,7 @@ export async function uploadTextToDrive(options: {
     headers: {
       Authorization: `Bearer ${options.accessToken}`
     },
-    body: form as any
+    body: form
   });
 
   if (!response.ok) {

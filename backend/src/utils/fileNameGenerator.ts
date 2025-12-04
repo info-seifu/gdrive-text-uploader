@@ -18,11 +18,12 @@ export function generateUniqueFileName(
   }
 
   let counter = 2;
-  while (true) {
-    const candidate = `${studentId}_${date}_${counter}.txt`;
-    if (!fs.existsSync(path.join(uploadDir, candidate))) {
-      return candidate;
-    }
+  let candidate = baseName;
+
+  while (fs.existsSync(path.join(uploadDir, candidate))) {
+    candidate = `${studentId}_${date}_${counter}.txt`;
     counter += 1;
   }
+
+  return candidate;
 }
