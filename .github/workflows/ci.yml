@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-      - run: npm ci
+      - run: npm install --no-fund --no-audit
       - run: npm run lint
       - run: npm run test
 
@@ -31,5 +31,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-      - run: npm ci
+      - run: npm install --no-fund --no-audit
       - run: npm run build --if-present
