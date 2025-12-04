@@ -1,4 +1,4 @@
-import { FormEvent, useMemo, useState } from 'react';
+import { FormEvent, useState } from 'react';
 
 const today = new Date().toISOString().slice(0, 10);
 
@@ -19,8 +19,6 @@ export default function UploadForm({ onSubmit, error, loading }: Props) {
   const [date, setDate] = useState(today);
   const [file, setFile] = useState<File | null>(null);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
-
-  const isBusy = useMemo(() => loading, [loading]);
 
   const validate = (): boolean => {
     const nextErrors: FieldErrors = {};
@@ -89,8 +87,8 @@ export default function UploadForm({ onSubmit, error, loading }: Props) {
           />
           {fieldErrors.file && <span className="inline-error">{fieldErrors.file}</span>}
         </label>
-        <button type="submit" disabled={isBusy}>
-          {isBusy ? 'アップロード中…' : 'アップロード'}
+        <button type="submit" disabled={loading}>
+          {loading ? 'アップロード中…' : 'アップロード'}
         </button>
       </form>
       {error && <div className="message error">{error}</div>}

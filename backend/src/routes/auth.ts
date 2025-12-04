@@ -1,18 +1,18 @@
-import { Router } from 'express';
+import express, { Request, Response } from 'express';
 
 import { failure, success } from '../utils/apiResponse';
 import { buildAuthUrl, exchangeCodeForTokens, fetchUserInfo } from '../utils/googleClient';
 
-const router = Router();
+const router = express.Router();
 
 const frontendOrigin = process.env.FRONTEND_ORIGIN ?? 'http://localhost:5173';
 
-router.get('/google', (_req, res) => {
+router.get('/google', (_req: Request, res: Response) => {
   const url = buildAuthUrl();
   res.redirect(url);
 });
 
-router.get('/google/callback', async (req, res) => {
+router.get('/google/callback', async (req: Request, res: Response) => {
   const { code, error } = req.query as { code?: string; error?: string };
 
   if (error) {
@@ -40,13 +40,13 @@ router.get('/google/callback', async (req, res) => {
   }
 });
 
-router.post('/logout', (req, res) => {
+router.post('/logout', (req: Request, res: Response) => {
   req.session.destroy(() => {
     res.json(success({ authenticated: false }, 'ログアウトしました'));
   });
 });
 
-router.get('/me', (req, res) => {
+router.get('/me', (req: Request, res: Response) => {
   if (req.session.userEmail) {
     res.json(success({ authenticated: true, email: req.session.userEmail }));
     return;

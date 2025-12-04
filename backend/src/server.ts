@@ -1,15 +1,14 @@
-import path from 'path';
-
 import cors from 'cors';
-import dotenv from 'dotenv';
-import express from 'express';
+import { config } from 'dotenv';
+import express, { NextFunction, Request, Response } from 'express';
 import session from 'express-session';
+import path from 'path';
 
 import authRoutes from './routes/auth';
 import uploadRoutes from './routes/upload';
 import { failure } from './utils/apiResponse';
 
-dotenv.config({ path: path.resolve('../.env') });
+config({ path: path.resolve('../.env') });
 
 const app = express();
 const port = process.env.PORT ? Number(process.env.PORT) : 4000;
@@ -31,19 +30,19 @@ app.use(
   })
 );
 
-app.get('/health', (_req, res) => {
+app.get('/health', (_req: Request, res: Response) => {
   res.json({ status: 'ok' });
 });
 
 app.use('/auth', authRoutes);
 app.use('/api', uploadRoutes);
 
-app.use((req, res) => {
+app.use((req: Request, res: Response) => {
   res.status(404).json(failure('NOT_FOUND', `Path not found: ${req.path}`));
 });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err);
   res.status(500).json(failure('INTERNAL_ERROR', '予期せぬエラーが発生しました'));
 });

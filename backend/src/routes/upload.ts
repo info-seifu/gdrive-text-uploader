@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import multer from 'multer';
 
 import { requireAuth } from '../middleware/authMiddleware';
@@ -8,16 +8,16 @@ import { ensureValidAccessToken, uploadTextToDrive } from '../utils/googleClient
 import { PlainUploadedFile, validateDate, validatePlainTextFile, validateStudentId } from '../utils/validation';
 
 const upload = multer({
-  storage: multer.memoryStorage(),
+  storage: 'memory',
   limits: { fileSize: 10 * 1024 * 1024 }
 });
 
-const router = Router();
+const router = express.Router();
 
-router.post('/upload', requireAuth, (req, res, next) => {
-  upload.single('file')(req, res, err => {
+router.post('/upload', requireAuth, (req: Request, res: Response, next: NextFunction) => {
+  upload.single('file')(req, res, (err: unknown) => {
     if (err) {
-      res.status(400).json(failure('UPLOAD_PARSE_FAILED', err.message));
+      res.status(400).json(failure('UPLOAD_PARSE_FAILED', (err as Error).message));
       return;
     }
 
