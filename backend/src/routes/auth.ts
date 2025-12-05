@@ -17,12 +17,17 @@ router.get('/google/callback', async (req: Request, res: Response) => {
   const frontendOrigin = getFrontendOrigin();
   const { code, error } = req.query as { code?: string; error?: string };
 
+  console.log('[AUTH CALLBACK] Received callback');
+  console.log('[AUTH CALLBACK] Session before auth:', req.session);
+
   if (error) {
+    console.log('[AUTH CALLBACK] Error:', error);
     res.redirect(`${frontendOrigin}?error=${encodeURIComponent(error)}`);
     return;
   }
 
   if (!code) {
+    console.log('[AUTH CALLBACK] Missing code');
     res.redirect(`${frontendOrigin}?error=missing_code`);
     return;
   }
@@ -31,13 +36,18 @@ router.get('/google/callback', async (req: Request, res: Response) => {
     const tokens = await exchangeCodeForTokens(code);
     const userInfo = await fetchUserInfo(tokens.access_token);
 
+    console.log('[AUTH CALLBACK] User email:', userInfo.email);
+
     req.session.userEmail = userInfo.email ?? 'unknown-user';
     req.session.accessToken = tokens.access_token;
     req.session.refreshToken = tokens.refresh_token;
     req.session.tokenExpiry = Date.now() + tokens.expires_in * 1000;
 
+    console.log('[AUTH CALLBACK] Session after setting:', req.session);
+
     res.redirect(frontendOrigin);
   } catch (err) {
+    console.log('[AUTH CALLBACK] Exception:', err);
     res.redirect(`${frontendOrigin}?error=${encodeURIComponent((err as Error).message)}`);
   }
 });

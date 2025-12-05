@@ -22,11 +22,18 @@ app.use(
     name: 'session',
     keys: [sessionSecret],
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    secure: process.env.NODE_ENV === 'production',
+    secure: true, // Always use secure in production (Vercel uses HTTPS)
     httpOnly: true,
     sameSite: 'lax'
   })
 );
+
+// Debug logging middleware
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+  console.log('Session data:', req.session);
+  next();
+});
 
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok' });
