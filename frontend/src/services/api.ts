@@ -12,14 +12,14 @@ async function requestJson<T>(input: RequestInfo | URL, init?: RequestInit): Pro
 }
 
 export async function logout(): Promise<ApiResponse<AuthInfo>> {
-  return requestJson<AuthInfo>('/auth/logout', {
+  return requestJson<AuthInfo>('/api/auth/logout', {
     method: 'POST',
     credentials: 'include'
   });
 }
 
 export async function me(): Promise<ApiResponse<AuthInfo>> {
-  return requestJson<AuthInfo>('/auth/me', {
+  return requestJson<AuthInfo>('/api/auth/me', {
     method: 'GET',
     credentials: 'include'
   });
