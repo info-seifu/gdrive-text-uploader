@@ -1,6 +1,6 @@
 const cors = require('cors');
 const express = require('express');
-const session = require('express-session');
+const cookieSession = require('cookie-session');
 
 const authRoutes = require('../backend/dist/routes/auth').default;
 const uploadRoutes = require('../backend/dist/routes/upload').default;
@@ -18,11 +18,13 @@ app.use(
 );
 app.use(express.json());
 app.use(
-  session({
-    secret: sessionSecret,
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: process.env.NODE_ENV === 'production' }
+  cookieSession({
+    name: 'session',
+    keys: [sessionSecret],
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    sameSite: 'lax'
   })
 );
 
