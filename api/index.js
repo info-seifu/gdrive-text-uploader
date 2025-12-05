@@ -24,7 +24,8 @@ app.use(
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
     secure: true, // Always use secure in production (Vercel uses HTTPS)
     httpOnly: true,
-    sameSite: 'lax'
+    sameSite: 'none', // Allow cross-site cookies for OAuth redirect
+    domain: undefined // Let browser set domain automatically
   })
 );
 
