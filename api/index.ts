@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import session from 'express-session';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 import authRoutes from '../backend/src/routes/auth';
 import uploadRoutes from '../backend/src/routes/upload';
@@ -43,4 +44,7 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   res.status(500).json(failure('INTERNAL_ERROR', '予期せぬエラーが発生しました'));
 });
 
-export default app;
+// Export handler for Vercel Serverless Functions
+export default (req: VercelRequest, res: VercelResponse) => {
+  return app(req as any, res as any);
+};

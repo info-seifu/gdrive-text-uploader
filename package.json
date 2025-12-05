@@ -23,6 +23,7 @@
     "@types/express-session": "^1.18.0",
     "@types/multer": "^2.0.0",
     "@types/node": "^20.14.0",
+    "@vercel/node": "^5.5.15",
     "typescript": "^5.5.4"
   }
 }
