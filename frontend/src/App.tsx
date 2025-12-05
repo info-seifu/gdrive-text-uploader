@@ -81,7 +81,7 @@ function App() {
       <header className="header">
         <div>
           <h1>テキストファイルアップローダー</h1>
-          <p className="subtitle">学生番号と日付を入力して、Google Driveに保存する準備ができます</p>
+          <p className="subtitle">学生番号と日付を入力して、Google Driveにファイルを保存します</p>
         </div>
         {auth.authenticated && (
           <div className="user-info">

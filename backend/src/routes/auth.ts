@@ -5,7 +5,8 @@ import { buildAuthUrl, exchangeCodeForTokens, fetchUserInfo } from '../utils/goo
 
 const router = express.Router();
 
-const frontendOrigin = process.env.FRONTEND_ORIGIN ?? 'http://localhost:5173';
+// Helper function to get frontend origin
+const getFrontendOrigin = () => process.env.FRONTEND_ORIGIN ?? 'http://localhost:5173';
 
 router.get('/google', (_req: Request, res: Response) => {
   const url = buildAuthUrl();
@@ -13,6 +14,7 @@ router.get('/google', (_req: Request, res: Response) => {
 });
 
 router.get('/google/callback', async (req: Request, res: Response) => {
+  const frontendOrigin = getFrontendOrigin();
   const { code, error } = req.query as { code?: string; error?: string };
 
   if (error) {

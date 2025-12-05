@@ -7,8 +7,10 @@ import { generateUniqueFileName } from '../utils/fileNameGenerator';
 import { ensureValidAccessToken, uploadTextToDrive } from '../utils/googleClient';
 import { PlainUploadedFile, validateDate, validatePlainTextFile, validateStudentId } from '../utils/validation';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const storage = (multer as any).memoryStorage();
 const upload = multer({
-  storage: 'memory',
+  storage,
   limits: { fileSize: 10 * 1024 * 1024 }
 });
 

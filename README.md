@@ -52,12 +52,12 @@ npm run dev
 - バックエンドAPI: http://localhost:4000
 
 ## 主な仕様
-- Google OAuth 2.0 でログインし、Drive アクセスを許可
-- 学生番号（8桁数字）、日付（YYYY-MM-DD）、テキストファイル(.txt)をアップロード
+- Google OAuth 2.0 でログイン（@i-seifu.jpドメイン、数字のみのユーザー名を除外）
+- 学生番号（7桁数字）、日付（YYYY-MM-DD）、テキストファイル(.txt)をアップロード
 - ファイルサイズ上限: 10MB
-- 重複ファイル名は `{学生番号}_{日付}_{連番}.txt` として保存
-- Google Drive の指定フォルダ（環境変数 `GOOGLE_DRIVE_FOLDER_ID`）に multipart アップロード
-- 認証・アップロード結果をフロントエンドで fileId とともに表示
+- ファイル名は `drive_{学生番号}_{日付}.txt` として保存（既存の場合は連番付与）
+- Google Drive の指定フォルダ（環境変数 `GOOGLE_DRIVE_FOLDER_ID`）にアップロード
+- アップロード結果をフロントエンドで fileId とともに表示
 
 ## レスポンスフォーマット
 APIは以下の共通フォーマットで返却します。

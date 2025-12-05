@@ -10,8 +10,8 @@ export function validateStudentId(value?: string): ValidationResult<string> {
   if (!value) {
     return { ok: false, message: '学生番号を入力してください' };
   }
-  if (!/^\d{8}$/.test(value)) {
-    return { ok: false, message: '学生番号は8桁の半角数字で入力してください' };
+  if (!/^\d{7}$/.test(value)) {
+    return { ok: false, message: '学生番号は7桁の半角数字で入力してください' };
   }
   return { ok: true, value };
 }

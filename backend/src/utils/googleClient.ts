@@ -129,7 +129,8 @@ export async function uploadTextToDrive(options: {
 
   const form = new FormData();
   form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
-  form.append('file', options.content, options.fileName);
+  // BufferをBlobとして追加
+  form.append('file', new Blob([options.content], { type: 'text/plain' }), options.fileName);
 
   const response = await fetch(options.folderId ? `${GOOGLE_UPLOAD_URL}&supportsAllDrives=true` : GOOGLE_UPLOAD_URL, {
     method: 'POST',

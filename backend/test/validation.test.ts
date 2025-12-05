@@ -2,9 +2,10 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { validateDate, validatePlainTextFile, validateStudentId } from '../src/utils/validation.js';
 
-test('学生番号は8桁数字のみ有効', () => {
-  assert.equal(validateStudentId('12345678').ok, true);
+test('学生番号は7桁数字のみ有効', () => {
+  assert.equal(validateStudentId('1234567').ok, true);
   assert.equal(validateStudentId('abc').ok, false);
+  assert.equal(validateStudentId('12345678').ok, false);
 });
 
 test('日付はYYYY-MM-DD形式でバリデーション', () => {

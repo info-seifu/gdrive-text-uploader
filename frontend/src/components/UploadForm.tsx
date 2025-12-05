@@ -22,8 +22,8 @@ export default function UploadForm({ onSubmit, error, loading }: Props) {
 
   const validate = (): boolean => {
     const nextErrors: FieldErrors = {};
-    if (!/^\d{8}$/.test(studentId)) {
-      nextErrors.studentId = '学生番号は8桁の半角数字で入力してください';
+    if (!/^\d{7}$/.test(studentId)) {
+      nextErrors.studentId = '学生番号は7桁の半角数字で入力してください';
     }
     if (!date) {
       nextErrors.date = '日付を入力してください';
@@ -44,13 +44,31 @@ export default function UploadForm({ onSubmit, error, loading }: Props) {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (!validate()) return;
-    const formData = new FormData();
-    formData.append('studentId', studentId);
-    formData.append('date', date);
-    if (file) {
-      formData.append('file', file);
+
+    if (!file) {
+      return;
     }
-    await onSubmit(formData);
+
+    const formElement = event.target as HTMLFormElement;
+    const fileInput = formElement.querySelector('input[type="file"]') as HTMLInputElement;
+
+    if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+      setFieldErrors({ ...fieldErrors, file: 'ファイルが選択されていません' });
+      return;
+    }
+
+    const selectedFile = fileInput.files[0];
+
+    try {
+      const formData = new FormData();
+      formData.append('studentId', studentId);
+      formData.append('date', date);
+      formData.append('file', selectedFile);
+
+      await onSubmit(formData);
+    } catch (e) {
+      setFieldErrors({ ...fieldErrors, file: 'ファイルのアップロードに失敗しました' });
+    }
   };
 
   return (
@@ -59,21 +77,29 @@ export default function UploadForm({ onSubmit, error, loading }: Props) {
       <p className="subtitle">学生番号・日付・テキストファイルを入力してください</p>
       <form onSubmit={handleSubmit} className="form-grid" noValidate>
         <label>
-          学生番号 (8桁数字)
+          学生番号 (7桁数字)
           <input
             type="text"
             value={studentId}
             onChange={e => setStudentId(e.target.value)}
-            placeholder="12345678"
-            pattern="\d{8}"
+            placeholder="1234567"
+            pattern="\d{7}"
             required
             aria-invalid={Boolean(fieldErrors.studentId)}
+            name="studentId"
           />
           {fieldErrors.studentId && <span className="inline-error">{fieldErrors.studentId}</span>}
         </label>
         <label>
           日付 (YYYY-MM-DD)
-          <input type="date" value={date} onChange={e => setDate(e.target.value)} required aria-invalid={Boolean(fieldErrors.date)} />
+          <input
+            type="date"
+            value={date}
+            onChange={e => setDate(e.target.value)}
+            required
+            aria-invalid={Boolean(fieldErrors.date)}
+            name="date"
+          />
           {fieldErrors.date && <span className="inline-error">{fieldErrors.date}</span>}
         </label>
         <label>
@@ -84,6 +110,7 @@ export default function UploadForm({ onSubmit, error, loading }: Props) {
             onChange={e => setFile(e.target.files?.[0] ?? null)}
             required
             aria-invalid={Boolean(fieldErrors.file)}
+            name="file"
           />
           {fieldErrors.file && <span className="inline-error">{fieldErrors.file}</span>}
         </label>
