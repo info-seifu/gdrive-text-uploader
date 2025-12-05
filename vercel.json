@@ -11,7 +11,7 @@
     }
   ],
   "functions": {
-    "api/index.js": {
+    "api/index.cjs": {
       "includeFiles": "backend/dist/**"
     }
   }
