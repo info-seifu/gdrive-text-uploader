@@ -2,8 +2,8 @@ const cors = require('cors');
 const express = require('express');
 const session = require('express-session');
 
-const authRoutes = require('../backend/dist/routes/auth');
-const uploadRoutes = require('../backend/dist/routes/upload');
+const authRoutes = require('../backend/dist/routes/auth').default;
+const uploadRoutes = require('../backend/dist/routes/upload').default;
 const { failure } = require('../backend/dist/utils/apiResponse');
 
 const app = express();
