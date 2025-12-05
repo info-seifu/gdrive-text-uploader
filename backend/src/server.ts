@@ -41,7 +41,7 @@ app.get('/health', (_req: Request, res: Response) => {
   res.json({ status: 'ok' });
 });
 
-app.use('/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 app.use('/api', uploadRoutes);
 
 // Serve frontend static files

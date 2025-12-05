@@ -45,7 +45,7 @@ function App() {
   const handleLogin = () => {
     setError(null);
     setMessage(null);
-    window.location.href = '/auth/google';
+    window.location.href = '/api/auth/google';
   };
 
   const handleLogout = async () => {
