@@ -1,11 +1,10 @@
-import cors from 'cors';
-import express, { NextFunction, Request, Response } from 'express';
-import session from 'express-session';
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+const cors = require('cors');
+const express = require('express');
+const session = require('express-session');
 
-import authRoutes from '../backend/dist/routes/auth';
-import uploadRoutes from '../backend/dist/routes/upload';
-import { failure } from '../backend/dist/utils/apiResponse';
+const authRoutes = require('../backend/dist/routes/auth');
+const uploadRoutes = require('../backend/dist/routes/upload');
+const { failure } = require('../backend/dist/utils/apiResponse');
 
 const app = express();
 
@@ -27,24 +26,23 @@ app.use(
   })
 );
 
-app.get('/api/health', (_req: Request, res: Response) => {
+app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
 
 app.use('/api/auth', authRoutes);
 app.use('/api', uploadRoutes);
 
-app.use((req: Request, res: Response) => {
+app.use((req, res) => {
   res.status(404).json(failure('NOT_FOUND', `Path not found: ${req.path}`));
 });
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+app.use((err, _req, res, _next) => {
   console.error(err);
   res.status(500).json(failure('INTERNAL_ERROR', '予期せぬエラーが発生しました'));
 });
 
 // Export handler for Vercel Serverless Functions
-export default (req: VercelRequest, res: VercelResponse) => {
-  return app(req as any, res as any);
+module.exports = (req, res) => {
+  return app(req, res);
 };
