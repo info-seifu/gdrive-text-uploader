@@ -43,9 +43,8 @@ router.get('/google/callback', async (req: Request, res: Response) => {
 });
 
 router.post('/logout', (req: Request, res: Response) => {
-  req.session.destroy(() => {
-    res.json(success({ authenticated: false }, 'ログアウトしました'));
-  });
+  req.session = null;
+  res.json(success({ authenticated: false }, 'ログアウトしました'));
 });
 
 router.get('/me', (req: Request, res: Response) => {

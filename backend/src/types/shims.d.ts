@@ -27,26 +27,20 @@ declare module 'express' {
   export default exp;
 }
 
-declare module 'express-session' {
+declare module 'cookie-session' {
   import type { RequestHandler } from 'express';
-  export interface SessionData {
-    userEmail?: string;
-    accessToken?: string;
-    refreshToken?: string;
-    tokenExpiry?: number;
+  export interface CookieSessionOptions {
+    name?: string;
+    keys?: string[];
+    secret?: string;
+    maxAge?: number;
+    secure?: boolean;
+    httpOnly?: boolean;
+    sameSite?: 'strict' | 'lax' | 'none';
     [key: string]: any;
   }
-  export type Session = SessionData & {
-    destroy(callback: (err?: unknown) => void): void;
-  };
-  export interface SessionOptions {
-    secret: string;
-    resave: boolean;
-    saveUninitialized: boolean;
-    cookie?: any;
-  }
-  const session: (options: SessionOptions) => RequestHandler;
-  export default session;
+  const cookieSession: (options: CookieSessionOptions) => RequestHandler;
+  export default cookieSession;
 }
 
 declare module 'cors' {
