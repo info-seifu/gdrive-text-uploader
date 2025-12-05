@@ -1,27 +1,55 @@
 # Google Drive Text Uploader
 
-ドキュメントの仕様に沿って、React + Express でテキストファイルをGoogle Driveへアップロードするプロトタイプを構築しました。
+@i-seifu.jpドメインのユーザーが、テキストファイルをGoogle Driveへアップロードできるシステムです。
 
-## 開発環境のセットアップ
+## 🚀 デプロイ
+
+このプロジェクトは**Vercel**にフロントエンドとバックエンドを統合してデプロイできます。
+
+詳細は [デプロイメントガイド](docs/deployment-guide.md) を参照してください。
+
+### クイックデプロイ
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-org/gdrive-text-uploader)
+
+デプロイ後、環境変数の設定が必要です。
+
+## 💻 ローカル開発環境のセットアップ
+
+### 1. 依存関係のインストール
 
 ```bash
-# 依存関係のインストール
+# ルート、バックエンド、フロントエンドすべての依存関係をインストール
+npm install
 cd backend && npm install
 cd ../frontend && npm install
 ```
 
-バックエンドは `.env` をプロジェクトルートに配置して起動します（`.env.example` を参考）。Google OAuth クライアントの登録とリダイレクトURI設定が必要です。
+### 2. 環境変数の設定
+
+プロジェクトルートに `.env` ファイルを作成（`.env.example` を参考）:
 
 ```bash
-# backend/.env ではなくプロジェクト直下の .env を使用
-npm --prefix backend run dev
+cp .env.example .env
 ```
 
-フロントエンドは Vite の開発サーバーを利用します。
+Google OAuth クライアントの登録とリダイレクトURI設定が必要です。
+詳細は [デプロイメントガイド](docs/deployment-guide.md) の「Google Cloud Console の設定」を参照。
+
+### 3. 開発サーバーの起動
 
 ```bash
-npm --prefix frontend run dev
+# バックエンド（ターミナル1）
+cd backend
+npm run dev
+
+# フロントエンド（ターミナル2）
+cd frontend
+npm run dev
 ```
+
+- フロントエンド: http://localhost:5173
+- バックエンドAPI: http://localhost:4000
 
 ## 主な仕様
 - Google OAuth 2.0 でログインし、Drive アクセスを許可

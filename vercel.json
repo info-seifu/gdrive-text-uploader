@@ -1,0 +1,22 @@
+{
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/dist",
+  "devCommand": "cd frontend && npm run dev",
+  "installCommand": "npm install && cd backend && npm install && cd ../frontend && npm install",
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api"
+    }
+  ],
+  "env": {
+    "SESSION_SECRET": "@session-secret",
+    "GOOGLE_CLIENT_ID": "@google-client-id",
+    "GOOGLE_CLIENT_SECRET": "@google-client-secret",
+    "GOOGLE_OAUTH_REDIRECT_URI": "@google-oauth-redirect-uri",
+    "GOOGLE_OAUTH_SCOPES": "https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.email",
+    "GOOGLE_DRIVE_FOLDER_ID": "@google-drive-folder-id",
+    "FRONTEND_ORIGIN": "@frontend-origin"
+  }
+}
