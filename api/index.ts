@@ -3,9 +3,9 @@ import express, { NextFunction, Request, Response } from 'express';
 import session from 'express-session';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-import authRoutes from '../backend/dist/routes/auth.js';
-import uploadRoutes from '../backend/dist/routes/upload.js';
-import { failure } from '../backend/dist/utils/apiResponse.js';
+import authRoutes from '../backend/dist/routes/auth';
+import uploadRoutes from '../backend/dist/routes/upload';
+import { failure } from '../backend/dist/utils/apiResponse';
 
 const app = express();
 
